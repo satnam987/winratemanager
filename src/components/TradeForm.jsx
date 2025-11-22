@@ -138,6 +138,37 @@ function TradeForm({ onAddTrade }) {
             placeholder="e.g. RSI Divergence, Breakout..."
             value={formData.strategy}
             onChange={e => setFormData({ ...formData, strategy: e.target.value })}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Trade Type</label>
+          <div className="radio-group">
+            <label className={`radio-btn ${formData.tradeType === 'Live' ? 'active live' : ''}`}>
+              <input
+                type="radio"
+                name="tradeType"
+                value="Live"
+                checked={formData.tradeType === 'Live'}
+                onChange={e => setFormData({ ...formData, tradeType: e.target.value })}
+              />
+              🟢 Live
+            </label>
+            <label className={`radio-btn ${formData.tradeType === 'Backtest' ? 'active backtest' : ''}`}>
+              <input
+                type="radio"
+                name="tradeType"
+                value="Backtest"
+                checked={formData.tradeType === 'Backtest'}
+                onChange={e => setFormData({ ...formData, tradeType: e.target.value })}
+              />
+              🔬 Backtest
+            </label>
+          </div>
+        </div>
+
+        <div className="form-group full-width">
+          <label>Comments</label>
           <textarea
             rows="3"
             placeholder="Trade analysis..."
