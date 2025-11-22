@@ -7,31 +7,33 @@ function TradeForm({ onAddTrade }) {
     type: 'BUY',
     result: 'WIN',
     rsi: '',
-    comment: ''
+    comment: '',
+    strategy: ''
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddTrade({ ...formData, id: Date.now() });
-    // Reset form but keep date? Or maybe just reset comment/rsi
+    // Reset form but keep date? Or maybe just reset comment/rsi/strategy
     setFormData(prev => ({
       ...prev,
       rsi: '',
-      comment: ''
+      comment: '',
+      strategy: ''
     }));
   };
 
   return (
     <form className="glass-panel trade-form" onSubmit={handleSubmit}>
       <h2>Log New Trade</h2>
-      
+
       <div className="form-grid">
         <div className="form-group">
           <label>Date</label>
-          <input 
-            type="date" 
+          <input
+            type="date"
             value={formData.date}
-            onChange={e => setFormData({...formData, date: e.target.value})}
+            onChange={e => setFormData({ ...formData, date: e.target.value })}
             required
           />
         </div>
@@ -40,22 +42,22 @@ function TradeForm({ onAddTrade }) {
           <label>Type</label>
           <div className="radio-group">
             <label className={`radio-btn ${formData.type === 'BUY' ? 'active buy' : ''}`}>
-              <input 
-                type="radio" 
-                name="type" 
+              <input
+                type="radio"
+                name="type"
                 value="BUY"
                 checked={formData.type === 'BUY'}
-                onChange={e => setFormData({...formData, type: e.target.value})}
+                onChange={e => setFormData({ ...formData, type: e.target.value })}
               />
               BUY
             </label>
             <label className={`radio-btn ${formData.type === 'SELL' ? 'active sell' : ''}`}>
-              <input 
-                type="radio" 
-                name="type" 
+              <input
+                type="radio"
+                name="type"
                 value="SELL"
                 checked={formData.type === 'SELL'}
-                onChange={e => setFormData({...formData, type: e.target.value})}
+                onChange={e => setFormData({ ...formData, type: e.target.value })}
               />
               SELL
             </label>
@@ -66,22 +68,22 @@ function TradeForm({ onAddTrade }) {
           <label>Result</label>
           <div className="radio-group">
             <label className={`radio-btn ${formData.result === 'WIN' ? 'active win' : ''}`}>
-              <input 
-                type="radio" 
-                name="result" 
+              <input
+                type="radio"
+                name="result"
                 value="WIN"
                 checked={formData.result === 'WIN'}
-                onChange={e => setFormData({...formData, result: e.target.value})}
+                onChange={e => setFormData({ ...formData, result: e.target.value })}
               />
               WIN
             </label>
             <label className={`radio-btn ${formData.result === 'LOSS' ? 'active loss' : ''}`}>
-              <input 
-                type="radio" 
-                name="result" 
+              <input
+                type="radio"
+                name="result"
                 value="LOSS"
                 checked={formData.result === 'LOSS'}
-                onChange={e => setFormData({...formData, result: e.target.value})}
+                onChange={e => setFormData({ ...formData, result: e.target.value })}
               />
               LOSS
             </label>
@@ -90,21 +92,31 @@ function TradeForm({ onAddTrade }) {
 
         <div className="form-group">
           <label>RSI Context</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder="e.g. Overbought, Divergence..."
             value={formData.rsi}
-            onChange={e => setFormData({...formData, rsi: e.target.value})}
+            onChange={e => setFormData({ ...formData, rsi: e.target.value })}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Strategy</label>
+          <input
+            type="text"
+            placeholder="e.g. RSI Divergence, Breakout..."
+            value={formData.strategy}
+            onChange={e => setFormData({ ...formData, strategy: e.target.value })}
           />
         </div>
 
         <div className="form-group full-width">
           <label>Comments</label>
-          <textarea 
+          <textarea
             rows="3"
             placeholder="Trade analysis..."
             value={formData.comment}
-            onChange={e => setFormData({...formData, comment: e.target.value})}
+            onChange={e => setFormData({ ...formData, comment: e.target.value })}
           />
         </div>
       </div>

@@ -2,16 +2,42 @@ import React, { useState, useEffect } from 'react';
 import Dashboard from './components/Dashboard';
 import TradeForm from './components/TradeForm';
 import TradeList from './components/TradeList';
+import Charts from './components/Charts';
 
 function App() {
-  const [trades, setTrades] = useState(() => {
-    const saved = localStorage.getItem('trades');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [trades, setTrades] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  // Load trades from Google Sheets on mount
   useEffect(() => {
-    localStorage.setItem('trades', JSON.stringify(trades));
-  }, [trades]);
+    const loadTrades = async () => {
+      try {
+        const response = await fetch('/api/load-trades');
+        if (response.ok) {
+          const data = await response.json();
+          setTrades(data.trades || []);
+        }
+      } catch (error) {
+        console.error('Failed to load trades:', error);
+        // Fallback to localStorage if API fails
+        const saved = localStorage.getItem('trades');
+        if (saved) {
+          setTrades(JSON.parse(saved));
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTrades();
+  }, []);
+
+  // Save to localStorage whenever trades change
+  useEffect(() => {
+    if (!loading) {
+      localStorage.setItem('trades', JSON.stringify(trades));
+    }
+  }, [trades, loading]);
 
   const addTrade = async (trade) => {
     // 1. Update Local State (Immediate UI update)
@@ -36,9 +62,6 @@ function App() {
       if (!response.ok) {
         alert(`Google Sheets Error: ${data.message || 'Unknown error'}\nDetails: ${data.error || ''}\nDebug: ${data.debug || ''}`);
         console.warn('Failed to save to Google Sheets', data);
-      } else {
-        // Optional: Notify success
-        // alert('Saved to Google Sheet!'); 
       }
     } catch (error) {
       console.error('Error saving to sheet:', error);
@@ -49,6 +72,14 @@ function App() {
   const deleteTrade = (id) => {
     setTrades(trades.filter(t => t.id !== id));
   };
+
+  if (loading) {
+    return (
+      <div className="container" style={{ textAlign: 'center', marginTop: '5rem' }}>
+        <h2>Loading trades...</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="container">
@@ -64,6 +95,7 @@ function App() {
       </header>
 
       <Dashboard trades={trades} />
+      <Charts trades={trades} />
       <TradeForm onAddTrade={addTrade} />
       <TradeList trades={trades} onDeleteTrade={deleteTrade} />
     </div>

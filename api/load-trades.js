@@ -1,14 +1,12 @@
 import { google } from 'googleapis';
 
 export default async function handler(req, res) {
-    if (req.method !== 'POST') {
+    if (req.method !== 'GET') {
         return res.status(405).json({ message: 'Method not allowed' });
     }
 
     try {
-        const { date, type, result, rsi, comment, strategy } = req.body;
-
-        // 1. Load credentials from Environment Variables
+        // 1. Load credentials
         const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
         let privateKey = process.env.GOOGLE_PRIVATE_KEY;
         const sheetId = process.env.GOOGLE_SHEET_ID;
@@ -17,15 +15,11 @@ export default async function handler(req, res) {
             throw new Error('Missing Google Sheets credentials');
         }
 
-        // CLEANUP: Fix common copy-paste errors with the key
+        // CLEANUP
         if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
             privateKey = privateKey.slice(1, -1);
         }
         privateKey = privateKey.replace(/\\n/g, '\n');
-
-        if (!privateKey.includes('-----BEGIN PRIVATE KEY-----')) {
-            throw new Error('Invalid Private Key format');
-        }
 
         // 2. Authenticate
         const auth = new google.auth.GoogleAuth({
@@ -38,29 +32,32 @@ export default async function handler(req, res) {
 
         const sheets = google.sheets({ version: 'v4', auth });
 
-        // 3. Append Row (now with Strategy column)
-        await sheets.spreadsheets.values.append({
+        // 3. Read all data from Sheet
+        const response = await sheets.spreadsheets.values.get({
             spreadsheetId: sheetId,
             range: 'Blad1!A:F',
-            valueInputOption: 'USER_ENTERED',
-            requestBody: {
-                values: [[date, type, result, rsi, comment, strategy || '']],
-            },
         });
 
-        return res.status(200).json({ message: 'Success' });
+        const rows = response.data.values || [];
+
+        // Convert rows to trade objects (skip header if present)
+        const trades = rows.slice(1).map((row, index) => ({
+            id: `sheet-${index}`,
+            date: row[0] || '',
+            type: row[1] || '',
+            result: row[2] || '',
+            rsi: row[3] || '',
+            comment: row[4] || '',
+            strategy: row[5] || ''
+        }));
+
+        return res.status(200).json({ trades });
 
     } catch (error) {
-        console.error('Google Sheets Error:', error);
-
-        const keyDebug = process.env.GOOGLE_PRIVATE_KEY
-            ? `Key Length: ${process.env.GOOGLE_PRIVATE_KEY.length}, Starts: ${process.env.GOOGLE_PRIVATE_KEY.substring(0, 30)}...`
-            : 'Key is undefined';
-
+        console.error('Google Sheets Read Error:', error);
         return res.status(500).json({
-            message: 'Failed to save to sheet',
-            error: error.message,
-            debug: keyDebug
+            message: 'Failed to load trades from sheet',
+            error: error.message
         });
     }
 }

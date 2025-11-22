@@ -21,6 +21,7 @@ function TradeList({ trades, onDeleteTrade }) {
                             <th>Type</th>
                             <th>Result</th>
                             <th>RSI Context</th>
+                            <th>Strategy</th>
                             <th>Comments</th>
                             <th>Action</th>
                         </tr>
@@ -40,6 +41,7 @@ function TradeList({ trades, onDeleteTrade }) {
                                     </span>
                                 </td>
                                 <td className="text-secondary">{trade.rsi}</td>
+                                <td className="text-secondary">{trade.strategy}</td>
                                 <td className="comment-cell">{trade.comment}</td>
                                 <td>
                                     <button
