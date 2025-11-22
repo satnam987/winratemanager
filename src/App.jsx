@@ -25,11 +25,18 @@ function App() {
         body: JSON.stringify(trade),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        console.warn('Failed to save to Google Sheets');
+        alert(`Google Sheets Error: ${data.message || 'Unknown error'}\nDetails: ${data.error || ''}`);
+        console.warn('Failed to save to Google Sheets', data);
+      } else {
+        // Optional: Notify success
+        // alert('Saved to Google Sheet!'); 
       }
     } catch (error) {
       console.error('Error saving to sheet:', error);
+      alert(`Network Error: ${error.message}`);
     }
   };
 
