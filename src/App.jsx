@@ -60,6 +60,9 @@ function App() {
       if (!response.ok) {
         alert(`Google Sheets Error: ${data.message || 'Unknown error'}\nDetails: ${data.error || ''}\nDebug: ${data.debug || ''}`);
         console.warn('Failed to save to Google Sheets', data);
+      } else {
+        // Success notification
+        alert('✅ Trade saved successfully!');
       }
     } catch (error) {
       console.error('Error saving to sheet:', error);
