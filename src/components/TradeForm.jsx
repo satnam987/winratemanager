@@ -93,36 +93,6 @@ function TradeForm({ onAddTrade }) {
 
         <div className="form-group">
           <label>RSI Context</label>
-          <div className="quick-copy-buttons">
-            <button
-              type="button"
-              className="quick-copy-btn"
-              onClick={() => setFormData({ ...formData, rsi: 'MONDJE WAS OPEN NAAR BUY, RSI OVERBOUGHT' })}
-            >
-              📈 BUY OVERBOUGHT
-            </button>
-            <button
-              type="button"
-              className="quick-copy-btn"
-              onClick={() => setFormData({ ...formData, rsi: 'MONDJE OPEN NAAR SELL, RSI OVERBOUGHT' })}
-            >
-              📉 SELL OVERBOUGHT
-            </button>
-            <button
-              type="button"
-              className="quick-copy-btn"
-              onClick={() => setFormData({ ...formData, rsi: 'MONDJE WAS OPEN NAAR BUY, RSI OVERSOLD' })}
-            >
-              📈 BUY OVERSOLD
-            </button>
-            <button
-              type="button"
-              className="quick-copy-btn"
-              onClick={() => setFormData({ ...formData, rsi: 'MONDJE OPEN NAAR SELL, RSI OVERSOLD' })}
-            >
-              📉 SELL OVERSOLD
-            </button>
-          </div>
           <input
             type="text"
             placeholder="e.g. Overbought, Divergence..."
@@ -179,6 +149,49 @@ function TradeForm({ onAddTrade }) {
       </div>
 
       <button type="submit" className="btn btn-primary full-width">Add Trade</button>
+
+      {/* RSI Quick Copy Helper */}
+      <div className="rsi-helper-panel">
+        <h3>📋 RSI Teksten (Kopieer & Plak)</h3>
+        <div className="rsi-helper-grid">
+          <div className="rsi-helper-item">
+            <span className="rsi-label">BUY OVERBOUGHT:</span>
+            <input
+              type="text"
+              readOnly
+              value="MONDJE WAS OPEN NAAR BUY, RSI OVERBOUGHT"
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+          <div className="rsi-helper-item">
+            <span className="rsi-label">SELL OVERBOUGHT:</span>
+            <input
+              type="text"
+              readOnly
+              value="MONDJE OPEN NAAR SELL, RSI OVERBOUGHT"
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+          <div className="rsi-helper-item">
+            <span className="rsi-label">BUY OVERSOLD:</span>
+            <input
+              type="text"
+              readOnly
+              value="MONDJE WAS OPEN NAAR BUY, RSI OVERSOLD"
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+          <div className="rsi-helper-item">
+            <span className="rsi-label">SELL OVERSOLD:</span>
+            <input
+              type="text"
+              readOnly
+              value="MONDJE OPEN NAAR SELL, RSI OVERSOLD"
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+        </div>
+      </div>
     </form>
   );
 }
