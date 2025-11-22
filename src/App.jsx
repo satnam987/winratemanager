@@ -3,10 +3,12 @@ import Dashboard from './components/Dashboard';
 import TradeForm from './components/TradeForm';
 import TradeList from './components/TradeList';
 import Charts from './components/Charts';
+import './App.css';
 
 function App() {
   const [trades, setTrades] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('dashboard'); // dashboard, log, analytics, history
 
   // Load trades from Google Sheets on mount
   useEffect(() => {
@@ -19,7 +21,6 @@ function App() {
         }
       } catch (error) {
         console.error('Failed to load trades:', error);
-        // Fallback to localStorage if API fails
         const saved = localStorage.getItem('trades');
         if (saved) {
           setTrades(JSON.parse(saved));
@@ -32,7 +33,6 @@ function App() {
     loadTrades();
   }, []);
 
-  // Save to localStorage whenever trades change
   useEffect(() => {
     if (!loading) {
       localStorage.setItem('trades', JSON.stringify(trades));
@@ -40,10 +40,8 @@ function App() {
   }, [trades, loading]);
 
   const addTrade = async (trade) => {
-    // 1. Update Local State (Immediate UI update)
     setTrades([trade, ...trades]);
 
-    // 2. Send to Google Sheets (Background)
     try {
       const response = await fetch('/api/save-trade', {
         method: 'POST',
@@ -88,16 +86,68 @@ function App() {
           fontSize: '2.5rem',
           background: 'linear-gradient(to right, #fff, #a0a0a0)',
           WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
+          WebkitTextFillColor: 'transparent',
+          marginBottom: '1.5rem'
         }}>
           WinRate Manager
         </h1>
+
+        {/* Tab Navigation */}
+        <div className="tab-nav">
+          <button
+            className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => setActiveTab('dashboard')}
+          >
+            📊 Dashboard
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'log' ? 'active' : ''}`}
+            onClick={() => setActiveTab('log')}
+          >
+            ➕ Log Trade
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'analytics' ? 'active' : ''}`}
+            onClick={() => setActiveTab('analytics')}
+          >
+            📈 Analytics
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`}
+            onClick={() => setActiveTab('history')}
+          >
+            📜 History
+          </button>
+        </div>
       </header>
 
-      <Dashboard trades={trades} />
-      <Charts trades={trades} />
-      <TradeForm onAddTrade={addTrade} />
-      <TradeList trades={trades} onDeleteTrade={deleteTrade} />
+      {/* Dashboard Tab */}
+      {activeTab === 'dashboard' && (
+        <div className="tab-content">
+          <Dashboard trades={trades} />
+        </div>
+      )}
+
+      {/* Log Trade Tab */}
+      {activeTab === 'log' && (
+        <div className="tab-content">
+          <TradeForm onAddTrade={addTrade} />
+        </div>
+      )}
+
+      {/* Analytics Tab */}
+      {activeTab === 'analytics' && (
+        <div className="tab-content">
+          <Charts trades={trades} />
+        </div>
+      )}
+
+      {/* History Tab */}
+      {activeTab === 'history' && (
+        <div className="tab-content">
+          <TradeList trades={trades} onDeleteTrade={deleteTrade} />
+        </div>
+      )}
     </div>
   );
 }

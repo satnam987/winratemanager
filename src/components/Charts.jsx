@@ -119,7 +119,7 @@ function Charts({ trades }) {
                 {/* Win Rate Over Time */}
                 <div className="glass-panel chart-card">
                     <h3>Win Rate Over Time</h3>
-                    <ResponsiveContainer width="100%" height={250}>
+                    <ResponsiveContainer width="100%" height={400}>
                         <LineChart data={winRateOverTime}>
                             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                             <XAxis dataKey="date" stroke="#a0a0a0" />
@@ -142,7 +142,7 @@ function Charts({ trades }) {
                 {/* Buy vs Sell */}
                 <div className="glass-panel chart-card">
                     <h3>Buy vs Sell Performance</h3>
-                    <ResponsiveContainer width="100%" height={250}>
+                    <ResponsiveContainer width="100%" height={400}>
                         <BarChart data={buyVsSell}>
                             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                             <XAxis dataKey="type" stroke="#a0a0a0" />
