@@ -31,3 +31,11 @@ A personal trading journal and win rate calculator.
 - React
 - Vite
 - Vanilla CSS (Glassmorphism Theme)
+- Google Sheets API
+
+## Google Sheets Setup
+To enable the spreadsheet backup, ensure the following Environment Variables are set in Vercel:
+- `GOOGLE_CLIENT_EMAIL`
+- `GOOGLE_PRIVATE_KEY`
+- `GOOGLE_SHEET_ID`
+
