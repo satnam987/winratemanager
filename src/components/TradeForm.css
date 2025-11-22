@@ -119,12 +119,174 @@ textarea:focus {
 }
 
 .radio-label:has(input[type="radio"]:checked) {
-    background: linear-gradient(135deg, rgba(157, 0, 255, 0.2), rgba(0, 210, 255, 0.2));
-    border-color: #9d00ff;
-    color: #9d00ff;
-    box-shadow: 0 0 15px rgba(157, 0, 255, 0.3);
-}
+    .trade-form {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
 
-.full-width {
-    width: 100%;
-}
+    .trade-form h2 {
+        margin-bottom: 1.5rem;
+        color: var(--accent-blue);
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 0.75rem;
+        color: var(--text-primary);
+        transition: border-color 0.2s;
+    }
+
+    input:focus,
+    textarea:focus {
+        outline: none;
+        border-color: var(--accent-blue);
+    }
+
+    /* Custom Radio Buttons */
+    .radio-group {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .radio-btn {
+        flex: 1;
+        text-align: center;
+        padding: 0.75rem;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .radio-btn input {
+        display: none;
+    }
+
+    .radio-btn.active.buy {
+        background: rgba(0, 255, 157, 0.15);
+        border-color: var(--accent-green);
+        color: var(--accent-green);
+    }
+
+    .radio-btn.active.sell {
+        background: rgba(255, 77, 77, 0.15);
+        border-color: var(--accent-red);
+        color: var(--accent-red);
+    }
+
+    .radio-btn.active.win {
+        background: rgba(0, 255, 157, 0.15);
+        border-color: var(--accent-green);
+        color: var(--accent-green);
+    }
+
+    .radio-btn.active.loss {
+        background: rgba(255, 77, 77, 0.15);
+        border-color: var(--accent-red);
+        color: var(--accent-red);
+    }
+
+    /* Trade Type radio buttons - purple/blue accent */
+    .radio-label {
+        flex: 1;
+        padding: 0.75rem;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.05);
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .radio-label input[type="radio"] {
+        display: none;
+    }
+
+    .radio-label:hover {
+        border-color: rgba(157, 0, 255, 0.5);
+        background: rgba(157, 0, 255, 0.1);
+    }
+
+    .radio-label:has(input[type="radio"]:checked) {
+        background: linear-gradient(135deg, rgba(157, 0, 255, 0.2), rgba(0, 210, 255, 0.2));
+        border-color: #9d00ff;
+        color: #9d00ff;
+        box-shadow: 0 0 15px rgba(157, 0, 255, 0.3);
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    /* Quick Copy Buttons */
+    .quick-copy-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .quick-copy-btn {
+        padding: 0.5rem 0.75rem;
+        background: rgba(0, 210, 255, 0.1);
+        border: 1px solid rgba(0, 210, 255, 0.3);
+        border-radius: 6px;
+        color: var(--accent-blue);
+        font-size: 0.75rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .quick-copy-btn:hover {
+        background: rgba(0, 210, 255, 0.2);
+        border-color: var(--accent-blue);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 210, 255, 0.2);
+    }
+
+    .quick-copy-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 1px 4px rgba(0, 210, 255, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        .quick-copy-buttons {
+            grid-template-columns: 1fr;
+        }
+    }

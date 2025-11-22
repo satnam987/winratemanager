@@ -93,6 +93,36 @@ function TradeForm({ onAddTrade }) {
 
         <div className="form-group">
           <label>RSI Context</label>
+          <div className="quick-copy-buttons">
+            <button
+              type="button"
+              className="quick-copy-btn"
+              onClick={() => setFormData({ ...formData, rsi: 'MONDJE WAS OPEN NAAR BUY, RSI OVERBOUGHT' })}
+            >
+              📈 BUY OVERBOUGHT
+            </button>
+            <button
+              type="button"
+              className="quick-copy-btn"
+              onClick={() => setFormData({ ...formData, rsi: 'MONDJE OPEN NAAR SELL, RSI OVERBOUGHT' })}
+            >
+              📉 SELL OVERBOUGHT
+            </button>
+            <button
+              type="button"
+              className="quick-copy-btn"
+              onClick={() => setFormData({ ...formData, rsi: 'MONDJE WAS OPEN NAAR BUY, RSI OVERSOLD' })}
+            >
+              📈 BUY OVERSOLD
+            </button>
+            <button
+              type="button"
+              className="quick-copy-btn"
+              onClick={() => setFormData({ ...formData, rsi: 'MONDJE OPEN NAAR SELL, RSI OVERSOLD' })}
+            >
+              📉 SELL OVERSOLD
+            </button>
+          </div>
           <input
             type="text"
             placeholder="e.g. Overbought, Divergence..."
