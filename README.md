@@ -1,6 +1,8 @@
 # WinRate Manager
 
-A personal trading journal and win rate calculator.
+**Last Updated:** 2025-11-22
+
+A trading performance tracker with Google Sheets integration and analytics.ulator.
 
 ## Features
 - **Dashboard**: View your Win Rate, Total Trades, Wins, and Losses.
