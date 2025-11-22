@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         // 3. Append Row
         await sheets.spreadsheets.values.append({
             spreadsheetId: sheetId,
-            range: 'Sheet1!A:E', // Assumes Sheet1 exists
+            range: 'Blad1!A:E', // Updated to match Dutch locale
             valueInputOption: 'USER_ENTERED',
             requestBody: {
                 values: [
