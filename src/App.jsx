@@ -25,6 +25,12 @@ function App() {
         body: JSON.stringify(trade),
       });
 
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") === -1) {
+        alert("Note: Saving to Google Sheets only works on the LIVE website (Vercel), not on localhost.\nPlease deploy and test there.");
+        return;
+      }
+
       const data = await response.json();
 
       if (!response.ok) {
