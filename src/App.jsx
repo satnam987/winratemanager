@@ -34,7 +34,7 @@ function App() {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(`Google Sheets Error: ${data.message || 'Unknown error'}\nDetails: ${data.error || ''}`);
+        alert(`Google Sheets Error: ${data.message || 'Unknown error'}\nDetails: ${data.error || ''}\nDebug: ${data.debug || ''}`);
         console.warn('Failed to save to Google Sheets', data);
       } else {
         // Optional: Notify success
