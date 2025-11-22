@@ -8,18 +8,19 @@ function TradeForm({ onAddTrade }) {
     result: 'WIN',
     rsi: '',
     comment: '',
-    strategy: ''
+    strategy: '',
+    tradeType: 'Live'
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddTrade({ ...formData, id: Date.now() });
-    // Reset form but keep date? Or maybe just reset comment/rsi/strategy
     setFormData(prev => ({
       ...prev,
       rsi: '',
       comment: '',
-      strategy: ''
+      strategy: '',
+      tradeType: 'Live'
     }));
   };
 
@@ -108,6 +109,32 @@ function TradeForm({ onAddTrade }) {
             value={formData.strategy}
             onChange={e => setFormData({ ...formData, strategy: e.target.value })}
           />
+        </div>
+
+        <div className="form-group">
+          <label>Trade Type</label>
+          <div className="radio-group">
+            <label className={`radio-btn ${formData.tradeType === 'Live' ? 'active' : ''}`}>
+              <input
+                type="radio"
+                name="tradeType"
+                value="Live"
+                checked={formData.tradeType === 'Live'}
+                onChange={e => setFormData({ ...formData, tradeType: e.target.value })}
+              />
+              Live
+            </label>
+            <label className={`radio-btn ${formData.tradeType === 'Backtest' ? 'active' : ''}`}>
+              <input
+                type="radio"
+                name="tradeType"
+                value="Backtest"
+                checked={formData.tradeType === 'Backtest'}
+                onChange={e => setFormData({ ...formData, tradeType: e.target.value })}
+              />
+              Backtest
+            </label>
+          </div>
         </div>
 
         <div className="form-group full-width">

@@ -6,9 +6,8 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { date, type, result, rsi, comment, strategy } = req.body;
+        const { date, type, result, rsi, comment, strategy, tradeType } = req.body;
 
-        // 1. Load credentials from Environment Variables
         const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
         let privateKey = process.env.GOOGLE_PRIVATE_KEY;
         const sheetId = process.env.GOOGLE_SHEET_ID;
@@ -17,7 +16,6 @@ export default async function handler(req, res) {
             throw new Error('Missing Google Sheets credentials');
         }
 
-        // CLEANUP: Fix common copy-paste errors with the key
         if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
             privateKey = privateKey.slice(1, -1);
         }
@@ -27,7 +25,6 @@ export default async function handler(req, res) {
             throw new Error('Invalid Private Key format');
         }
 
-        // 2. Authenticate
         const auth = new google.auth.GoogleAuth({
             credentials: {
                 client_email: clientEmail,
@@ -38,13 +35,12 @@ export default async function handler(req, res) {
 
         const sheets = google.sheets({ version: 'v4', auth });
 
-        // 3. Append Row (now with Strategy column)
         await sheets.spreadsheets.values.append({
             spreadsheetId: sheetId,
-            range: 'Blad1!A:F',
+            range: 'Blad1!A:G',
             valueInputOption: 'USER_ENTERED',
             requestBody: {
-                values: [[date, type, result, rsi, comment, strategy || '']],
+                values: [[date, type, result, rsi, comment, strategy || '', tradeType || 'Live']],
             },
         });
 
