@@ -88,6 +88,16 @@ function TradeForm({ onAddTrade }) {
               />
               LOSS
             </label>
+            <label className={`radio-btn ${formData.result === 'NO ENTRY' ? 'active no-entry' : ''}`}>
+              <input
+                type="radio"
+                name="result"
+                value="NO ENTRY"
+                checked={formData.result === 'NO ENTRY'}
+                onChange={e => setFormData({ ...formData, result: e.target.value })}
+              />
+              NO ENTRY
+            </label>
           </div>
         </div>
 

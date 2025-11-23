@@ -83,23 +83,7 @@ textarea:focus {
     color: var(--accent-red);
 }
 
-.radio-btn.active.win {
-    background: rgba(0, 255, 157, 0.15);
-    border-color: var(--accent-green);
-    color: var(--accent-green);
-}
-
-.radio-btn.active.loss {
-    background: rgba(255, 77, 77, 0.15);
-    border-color: var(--accent-red);
-    color: var(--accent-red);
-}
-
-.radio-btn.active.live {
-    background: linear-gradient(135deg, rgba(0, 255, 157, 0.2), rgba(0, 210, 255, 0.15));
-    border-color: var(--accent-green);
-    color: var(--accent-green);
-    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
 }
 
 .radio-btn.active.backtest {
