@@ -146,6 +146,16 @@ function TradeForm({ onAddTrade }) {
               />
               EUR/USD
             </label>
+            <label className={`radio-btn ${formData.pair === 'XAU/USD' ? 'active pair-selected' : ''}`}>
+              <input
+                type="radio"
+                name="pair"
+                value="XAU/USD"
+                checked={formData.pair === 'XAU/USD'}
+                onChange={e => setFormData({ ...formData, pair: e.target.value })}
+              />
+              XAU/USD
+            </label>
           </div>
         </div>
 
