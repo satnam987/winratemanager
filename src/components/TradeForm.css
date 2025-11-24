@@ -102,23 +102,6 @@ textarea:focus {
 }
 
 .radio-btn.active.live {
-    background: linear-gradient(135deg, rgba(0, 255, 157, 0.2), rgba(0, 210, 255, 0.15));
-    border-color: var(--accent-green);
-    color: var(--accent-green);
-    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
-}
-
-.radio-btn.active.backtest {
-    background: linear-gradient(135deg, rgba(157, 0, 255, 0.2), rgba(0, 210, 255, 0.2));
-    border-color: #9d00ff;
-    color: #9d00ff;
-    box-shadow: 0 0 15px rgba(157, 0, 255, 0.3);
-}
-
-/* RSI Helper Panel */
-.rsi-helper-panel {
-    margin-top: 1.5rem;
-    padding: 1rem;
     background: rgba(0, 210, 255, 0.05);
     border: 1px solid rgba(0, 210, 255, 0.2);
     border-radius: 8px;
