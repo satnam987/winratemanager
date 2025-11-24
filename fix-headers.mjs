@@ -1,13 +1,16 @@
 import { google } from 'googleapis';
 import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
 
-dotenv.config();
-
-async function fixSheetHeaders() {
+async function fixHeaders() {
     try {
         const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
         let privateKey = process.env.GOOGLE_PRIVATE_KEY;
         const sheetId = process.env.GOOGLE_SHEET_ID;
+
+        if (!clientEmail || !privateKey || !sheetId) {
+            throw new Error('Missing Google Sheets credentials');
+        }
 
         if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
             privateKey = privateKey.slice(1, -1);
@@ -24,22 +27,19 @@ async function fixSheetHeaders() {
 
         const sheets = google.sheets({ version: 'v4', auth });
 
-        // Update headers to include Trade Type
         await sheets.spreadsheets.values.update({
             spreadsheetId: sheetId,
-            range: 'Blad1!A1:G1',
+            range: 'Blad1!A1:H1',
             valueInputOption: 'USER_ENTERED',
             requestBody: {
-                values: [['Date', 'Type', 'Result', 'RSI', 'Comment', 'Strategy', 'Trade Type']],
+                values: [['Date', 'Type', 'Result', 'RSI Context', 'Comments', 'Strategy', 'Trade Type', 'Pair']],
             },
         });
 
-        console.log('✅ Headers updated successfully!');
-        console.log('New headers: Date | Type | Result | RSI | Comment | Strategy | Trade Type');
-
+        console.log('✅ Headers updated successfully with Pair column!');
     } catch (error) {
         console.error('❌ Error updating headers:', error.message);
     }
 }
 
-fixSheetHeaders();
+fixHeaders();

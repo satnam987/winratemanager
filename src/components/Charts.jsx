@@ -102,6 +102,31 @@ function Charts({ trades }) {
         }));
     }, [trades]);
 
+    // Pair Performance
+    const pairData = useMemo(() => {
+        const pairMap = {};
+
+        trades.forEach(trade => {
+            const pair = trade.pair || 'NQ';
+            if (!pairMap[pair]) {
+                pairMap[pair] = { wins: 0, losses: 0 };
+            }
+            if (trade.result === 'WIN') {
+                pairMap[pair].wins++;
+            } else if (trade.result === 'LOSS') {
+                pairMap[pair].losses++;
+            }
+        });
+
+        return Object.keys(pairMap).map(pair => ({
+            pair,
+            wins: pairMap[pair].wins,
+            losses: pairMap[pair].losses,
+            winRate: Math.round((pairMap[pair].wins /
+                (pairMap[pair].wins + pairMap[pair].losses)) * 100)
+        }));
+    }, [trades]);
+
     if (trades.length === 0) {
         return (
             <div className="glass-panel charts-container">
@@ -163,6 +188,25 @@ function Charts({ trades }) {
                         <BarChart data={strategyData}>
                             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                             <XAxis dataKey="name" stroke="#a0a0a0" />
+                            <YAxis stroke="#a0a0a0" />
+                            <Tooltip
+                                contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
+                                labelStyle={{ color: '#fff' }}
+                            />
+                            <Legend />
+                            <Bar dataKey="wins" fill={COLORS.green} />
+                            <Bar dataKey="losses" fill={COLORS.red} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+
+                {/* Pair Performance */}
+                <div className="glass-panel chart-card">
+                    <h3>Trading Pair Performance</h3>
+                    <ResponsiveContainer width="100%" height={250}>
+                        <BarChart data={pairData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                            <XAxis dataKey="pair" stroke="#a0a0a0" />
                             <YAxis stroke="#a0a0a0" />
                             <Tooltip
                                 contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }}
