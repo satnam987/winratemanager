@@ -178,7 +178,7 @@ function App() {
             </div>
             <TradeList
               trades={historyPairFilter === 'All' ? trades : trades.filter(t => t.pair === historyPairFilter)}
-              onDeleteTrade={handleDeleteTrade}
+              onDeleteTrade={deleteTrade}
             />
           </div>
         </div>
