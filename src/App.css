@@ -36,6 +36,41 @@
 
 .tab-btn.active {
   background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 255, 157, 0.2));
+  border-bottom: 2px solid var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+/* History Pair Filter */
+.history-pair-filter {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.history-pair-filter .filter-btn {
+  flex: 1;
+  max-width: 200px;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.history-pair-filter .filter-btn:hover {
+  border-color: rgba(0, 210, 255, 0.5);
+  background: rgba(0, 210, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.history-pair-filter .filter-btn.active {
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 255, 157, 0.2));
   border-color: var(--accent-blue);
   color: var(--accent-blue);
   box-shadow: 0 4px 20px rgba(0, 210, 255, 0.3);
