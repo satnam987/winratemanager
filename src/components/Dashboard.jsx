@@ -107,41 +107,6 @@ function Dashboard({ trades }) {
                 <button
                     className={`filter-btn ${filter === 'Backtest' ? 'active' : ''}`}
                     onClick={() => setFilter('Backtest')}
-                >
-                    🔬 Backtest
-                </button>
-            </div>
-
-            <div className="pair-filter glass-panel">
-                <button
-                    className={`filter-btn ${pairFilter === 'All' ? 'active' : ''}`}
-                    onClick={() => setPairFilter('All')}
-                >
-                    📊 All Pairs
-                </button>
-                <button
-                    className={`filter-btn ${pairFilter === 'NQ' ? 'active' : ''}`}
-                    onClick={() => setPairFilter('NQ')}
-                >
-                    📈 NQ
-                </button>
-                <button
-                    className={`filter-btn ${pairFilter === 'GBP/USD' ? 'active' : ''}`}
-                    onClick={() => setPairFilter('GBP/USD')}
-                >
-                    💷 GBP/USD
-                </button>
-                <button
-                    className={`filter-btn ${pairFilter === 'XAU/USD' ? 'active' : ''}`}
-                    onClick={() => setPairFilter('XAU/USD')}
-                >
-                    🥇 XAU/USD
-                </button>
-            </div>
-
-            <div className="stats-grid">
-                <div className="stat-card">
-                    <div className="stat-label">Win Rate</div>
                     <div className="stat-value win-rate">{winRate}%</div>
                 </div>
 
@@ -192,7 +157,7 @@ function Dashboard({ trades }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
