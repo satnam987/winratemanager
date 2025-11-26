@@ -164,10 +164,10 @@ function App() {
                 📈 NQ
               </button>
               <button
-                className={`filter-btn ${historyPairFilter === 'EUR/USD' ? 'active' : ''}`}
-                onClick={() => setHistoryPairFilter('EUR/USD')}
+                className={`filter-btn ${historyPairFilter === 'GBP/USD' ? 'active' : ''}`}
+                onClick={() => setHistoryPairFilter('GBP/USD')}
               >
-                💱 EUR/USD
+                💷 GBP/USD
               </button>
               <button
                 className={`filter-btn ${historyPairFilter === 'XAU/USD' ? 'active' : ''}`}

@@ -136,15 +136,15 @@ function TradeForm({ onAddTrade }) {
               />
               NQ
             </label>
-            <label className={`radio-btn ${formData.pair === 'EUR/USD' ? 'active pair-selected' : ''}`}>
+            <label className={`radio-btn ${formData.pair === 'GBP/USD' ? 'active pair-selected' : ''}`}>
               <input
                 type="radio"
                 name="pair"
-                value="EUR/USD"
-                checked={formData.pair === 'EUR/USD'}
+                value="GBP/USD"
+                checked={formData.pair === 'GBP/USD'}
                 onChange={e => setFormData({ ...formData, pair: e.target.value })}
               />
-              EUR/USD
+              GBP/USD
             </label>
             <label className={`radio-btn ${formData.pair === 'XAU/USD' ? 'active pair-selected' : ''}`}>
               <input
