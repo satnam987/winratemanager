@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import './TradeForm.css';
 
 function TradeForm({ onAddTrade }) {
@@ -10,8 +10,35 @@ function TradeForm({ onAddTrade }) {
     comment: '',
     strategy: '',
     tradeType: 'Live',
-    pair: 'S&P500'
+    pair: 'S&P500',
+    rsiTimeframes: {
+      '15min': null,
+      '30min': null,
+      '45min': null,
+      '1h': null,
+      '2h': null
+    }
   });
+
+  // Calculate counts of equal and unequal
+  const rsiCounts = useMemo(() => {
+    const counts = { gelijk: 0, ongelijk: 0 };
+    Object.values(formData.rsiTimeframes).forEach(value => {
+      if (value === 'gelijk') counts.gelijk++;
+      else if (value === 'ongelijk') counts.ongelijk++;
+    });
+    return counts;
+  }, [formData.rsiTimeframes]);
+
+  const handleRsiTimeframeChange = (timeframe, value) => {
+    setFormData(prev => ({
+      ...prev,
+      rsiTimeframes: {
+        ...prev.rsiTimeframes,
+        [timeframe]: prev.rsiTimeframes[timeframe] === value ? null : value
+      }
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,7 +49,14 @@ function TradeForm({ onAddTrade }) {
       comment: '',
       strategy: '',
       tradeType: 'Live',
-      pair: 'S&P500'
+      pair: 'S&P500',
+      rsiTimeframes: {
+        '15min': null,
+        '30min': null,
+        '45min': null,
+        '1h': null,
+        '2h': null
+      }
     }));
   };
 
@@ -103,15 +137,48 @@ function TradeForm({ onAddTrade }) {
           </div>
         </div>
 
-        <div className="form-group">
-          <label>RSI Context</label>
-          <input
-            type="text"
-            placeholder="e.g. Overbought, Divergence..."
-            value={formData.rsi}
-            onChange={e => setFormData({ ...formData, rsi: e.target.value })}
-          />
+        <div className="form-group full-width">
+          <label>RSI Context (Multi-Timeframe)</label>
+          <div className="rsi-timeframes-container">
+            {/* Counters */}
+            <div className="rsi-counters">
+              <div className="rsi-counter gelijk">
+                <span className="counter-label">✓ Gelijk:</span>
+                <span className="counter-value">{rsiCounts.gelijk}</span>
+              </div>
+              <div className="rsi-counter ongelijk">
+                <span className="counter-label">✗ Ongelijk:</span>
+                <span className="counter-value">{rsiCounts.ongelijk}</span>
+              </div>
+            </div>
+
+            {/* Timeframe Buttons */}
+            <div className="rsi-timeframes-grid">
+              {['15min', '30min', '45min', '1h', '2h'].map(timeframe => (
+                <div key={timeframe} className="rsi-timeframe-item">
+                  <span className="timeframe-label">{timeframe}</span>
+                  <div className="rsi-btn-group">
+                    <button
+                      type="button"
+                      className={`rsi-btn gelijk ${formData.rsiTimeframes[timeframe] === 'gelijk' ? 'active' : ''}`}
+                      onClick={() => handleRsiTimeframeChange(timeframe, 'gelijk')}
+                    >
+                      Gelijk
+                    </button>
+                    <button
+                      type="button"
+                      className={`rsi-btn ongelijk ${formData.rsiTimeframes[timeframe] === 'ongelijk' ? 'active' : ''}`}
+                      onClick={() => handleRsiTimeframeChange(timeframe, 'ongelijk')}
+                    >
+                      Ongelijk
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
 
         <div className="form-group">
           <label>Strategy</label>

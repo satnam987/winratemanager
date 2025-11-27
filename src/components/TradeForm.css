@@ -122,6 +122,119 @@ textarea:focus {
     box-shadow: 0 0 15px rgba(157, 0, 255, 0.3);
 }
 
+/* RSI Timeframes Section */
+.rsi-timeframes-container {
+    background: rgba(0, 210, 255, 0.05);
+    border: 1px solid rgba(0, 210, 255, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.rsi-counters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.rsi-counter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.rsi-counter.gelijk {
+    background: rgba(0, 255, 157, 0.15);
+    border: 1px solid var(--accent-green);
+    color: var(--accent-green);
+}
+
+.rsi-counter.ongelijk {
+    background: rgba(255, 77, 77, 0.15);
+    border: 1px solid var(--accent-red);
+    color: var(--accent-red);
+}
+
+.counter-label {
+    opacity: 0.9;
+}
+
+.counter-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.rsi-timeframes-grid {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.rsi-timeframe-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.rsi-timeframe-item:hover {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(0, 210, 255, 0.3);
+}
+
+.timeframe-label {
+    min-width: 60px;
+    font-weight: 600;
+    color: var(--accent-blue);
+    font-size: 0.95rem;
+}
+
+.rsi-btn-group {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.rsi-btn {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.rsi-btn:hover {
+    background: rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+}
+
+.rsi-btn.gelijk.active {
+    background: rgba(0, 255, 157, 0.2);
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+}
+
+.rsi-btn.ongelijk.active {
+    background: rgba(255, 77, 77, 0.2);
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+}
+
 /* RSI Helper Panel */
 .rsi-helper-panel {
     margin-top: 1.5rem;
