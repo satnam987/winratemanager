@@ -31,6 +31,28 @@ export default async function handler(req, res) {
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: sheetId,
+            range: 'Blad1!A:H',
+        });
+
+        const rows = response.data.values || [];
+
+        const trades = rows.slice(1).map((row, index) => ({
+            id: `sheet-${index}`,
+            date: row[0] || '',
+            type: row[1] || '',
+            result: row[2] || '',
+            rsi: row[3] || '',
+            comment: row[4] || '',
+            strategy: row[5] || '',
+            tradeType: row[6] || 'Live',
+            pair: row[7] || 'S&P500'
+        }));
+
+        return res.status(200).json({ trades });
+
+    } catch (error) {
+        console.error('Google Sheets Read Error:', error);
+        return res.status(500).json({
             message: 'Failed to load trades from sheet',
             error: error.message
         });
