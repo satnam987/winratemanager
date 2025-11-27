@@ -30,33 +30,15 @@ export default async function handler(req, res) {
                 client_email: clientEmail,
                 private_key: privateKey,
             },
-            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-        });
 
-        const sheets = google.sheets({ version: 'v4', auth });
+            const keyDebug = process.env.GOOGLE_PRIVATE_KEY
+                ? `Key Length: ${process.env.GOOGLE_PRIVATE_KEY.length}, Starts: ${process.env.GOOGLE_PRIVATE_KEY.substring(0, 30)}...`
+                : 'Key is undefined';
 
-        await sheets.spreadsheets.values.append({
-            spreadsheetId: sheetId,
-            range: 'Blad1!A:H',
-            valueInputOption: 'USER_ENTERED',
-            requestBody: {
-                values: [[date, type, result, rsi, comment, strategy || '', tradeType || 'Live', pair || 'NQ']],
-            },
-        });
-
-        return res.status(200).json({ message: 'Success' });
-
-    } catch (error) {
-        console.error('Google Sheets Error:', error);
-
-        const keyDebug = process.env.GOOGLE_PRIVATE_KEY
-            ? `Key Length: ${process.env.GOOGLE_PRIVATE_KEY.length}, Starts: ${process.env.GOOGLE_PRIVATE_KEY.substring(0, 30)}...`
-            : 'Key is undefined';
-
-        return res.status(500).json({
-            message: 'Failed to save to sheet',
-            error: error.message,
-            debug: keyDebug
-        });
-    }
+            return res.status(500).json({
+                message: 'Failed to save to sheet',
+                error: error.message,
+                debug: keyDebug
+            });
+        }
 }

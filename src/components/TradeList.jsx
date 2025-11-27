@@ -47,7 +47,7 @@ function TradeList({ trades, onDeleteTrade }) {
                                 <td className="text-secondary">{trade.tradeType}</td>
                                 <td>
                                     <span className="badge pair">
-                                        {trade.pair || 'NQ'}
+                                        {trade.pair || 'S&P500'}
                                     </span>
                                 </td>
                                 <td className="comment-cell">{trade.comment}</td>

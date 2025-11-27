@@ -10,7 +10,7 @@ function TradeForm({ onAddTrade }) {
     comment: '',
     strategy: '',
     tradeType: 'Live',
-    pair: 'NQ'
+    pair: 'S&P500'
   });
 
   const handleSubmit = (e) => {
@@ -22,7 +22,7 @@ function TradeForm({ onAddTrade }) {
       comment: '',
       strategy: '',
       tradeType: 'Live',
-      pair: 'NQ'
+      pair: 'S&P500'
     }));
   };
 
@@ -121,52 +121,6 @@ function TradeForm({ onAddTrade }) {
             value={formData.strategy}
             onChange={e => setFormData({ ...formData, strategy: e.target.value })}
           />
-        </div>
-
-        <div className="form-group">
-          <label>Trading Pair</label>
-          <div className="radio-group">
-            <label className={`radio-btn ${formData.pair === 'NQ' ? 'active pair-selected' : ''}`}>
-              <input
-                type="radio"
-                name="pair"
-                value="NQ"
-                checked={formData.pair === 'NQ'}
-                onChange={e => setFormData({ ...formData, pair: e.target.value })}
-              />
-              NQ
-            </label>
-            <label className={`radio-btn ${formData.pair === 'EUR/USD' ? 'active pair-selected' : ''}`}>
-              <input
-                type="radio"
-                name="pair"
-                value="EUR/USD"
-                checked={formData.pair === 'EUR/USD'}
-                onChange={e => setFormData({ ...formData, pair: e.target.value })}
-              />
-              EUR/USD
-            </label>
-            <label className={`radio-btn ${formData.pair === 'GBP/USD' ? 'active pair-selected' : ''}`}>
-              <input
-                type="radio"
-                name="pair"
-                value="GBP/USD"
-                checked={formData.pair === 'GBP/USD'}
-                onChange={e => setFormData({ ...formData, pair: e.target.value })}
-              />
-              GBP/USD
-            </label>
-            <label className={`radio-btn ${formData.pair === 'XAU/USD' ? 'active pair-selected' : ''}`}>
-              <input
-                type="radio"
-                name="pair"
-                value="XAU/USD"
-                checked={formData.pair === 'XAU/USD'}
-                onChange={e => setFormData({ ...formData, pair: e.target.value })}
-              />
-              XAU/USD
-            </label>
-          </div>
         </div>
 
         <div className="form-group">

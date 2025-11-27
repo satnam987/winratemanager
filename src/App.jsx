@@ -9,7 +9,6 @@ function App() {
   const [trades, setTrades] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard'); // dashboard, log, analytics, history
-  const [historyPairFilter, setHistoryPairFilter] = useState('All');
 
   // Load trades from Google Sheets on mount
   useEffect(() => {
@@ -149,44 +148,10 @@ function App() {
       {/* History Tab */}
       {activeTab === 'history' && (
         <div className="tab-content">
-          <div>
-            <div className="history-pair-filter glass-panel">
-              <button
-                className={`filter-btn ${historyPairFilter === 'All' ? 'active' : ''}`}
-                onClick={() => setHistoryPairFilter('All')}
-              >
-                📊 All Pairs
-              </button>
-              <button
-                className={`filter-btn ${historyPairFilter === 'NQ' ? 'active' : ''}`}
-                onClick={() => setHistoryPairFilter('NQ')}
-              >
-                📈 NQ
-              </button>
-              <button
-                className={`filter-btn ${historyPairFilter === 'EUR/USD' ? 'active' : ''}`}
-                onClick={() => setHistoryPairFilter('EUR/USD')}
-              >
-                💱 EUR/USD
-              </button>
-              <button
-                className={`filter-btn ${historyPairFilter === 'GBP/USD' ? 'active' : ''}`}
-                onClick={() => setHistoryPairFilter('GBP/USD')}
-              >
-                💷 GBP/USD
-              </button>
-              <button
-                className={`filter-btn ${historyPairFilter === 'XAU/USD' ? 'active' : ''}`}
-                onClick={() => setHistoryPairFilter('XAU/USD')}
-              >
-                🥇 XAU/USD
-              </button>
-            </div>
-            <TradeList
-              trades={historyPairFilter === 'All' ? trades : trades.filter(t => t.pair === historyPairFilter)}
-              onDeleteTrade={deleteTrade}
-            />
-          </div>
+          <TradeList
+            trades={trades}
+            onDeleteTrade={deleteTrade}
+          />
         </div>
       )}
     </div>
