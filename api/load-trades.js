@@ -31,7 +31,7 @@ export default async function handler(req, res) {
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: sheetId,
-            range: 'Blad1!A:H',
+            range: 'Blad1!A:Z',
         });
 
         const rows = response.data.values || [];
@@ -45,7 +45,34 @@ export default async function handler(req, res) {
             comment: row[4] || '',
             strategy: row[5] || '',
             tradeType: row[6] || 'Live',
-            pair: row[7] || 'S&P500'
+            pair: row[7] || 'S&P500',
+            rsiTimeframes: {
+                '15min': {
+                    context: row[8] || null,
+                    direction: row[9] || null,
+                    rsi1530: row[10] || ''
+                },
+                '30min': {
+                    context: row[11] || null,
+                    direction: row[12] || null,
+                    rsi1530: row[13] || ''
+                },
+                '45min': {
+                    context: row[14] || null,
+                    direction: row[15] || null,
+                    rsi1530: row[16] || ''
+                },
+                '1h': {
+                    context: row[17] || null,
+                    direction: row[18] || null,
+                    rsi1530: row[19] || ''
+                },
+                '2h': {
+                    context: row[20] || null,
+                    direction: row[21] || null,
+                    rsi1530: row[22] || ''
+                }
+            }
         }));
 
         return res.status(200).json({ trades });

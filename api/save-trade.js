@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { date, type, result, rsi, comment, strategy, tradeType, pair } = req.body;
+        const { date, type, result, rsi, comment, strategy, tradeType, pair, rsiTimeframes } = req.body;
 
         const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
         let privateKey = process.env.GOOGLE_PRIVATE_KEY;
@@ -35,12 +35,35 @@ export default async function handler(req, res) {
 
         const sheets = google.sheets({ version: 'v4', auth });
 
+        // Extract RSI timeframe data
+        const rsiData = rsiTimeframes || {};
+        const timeframes = ['15min', '30min', '45min', '1h', '2h'];
+
+        // Build array with all RSI data: context, direction, rsi1530 for each timeframe
+        const rsiColumns = [];
+        timeframes.forEach(tf => {
+            const tfData = rsiData[tf] || { context: '', direction: '', rsi1530: '' };
+            rsiColumns.push(tfData.context || '');
+            rsiColumns.push(tfData.direction || '');
+            rsiColumns.push(tfData.rsi1530 || '');
+        });
+
         await sheets.spreadsheets.values.append({
             spreadsheetId: sheetId,
-            range: 'Blad1!A:H',
+            range: 'Blad1!A:Z',
             valueInputOption: 'USER_ENTERED',
             requestBody: {
-                values: [[date, type, result, rsi, comment, strategy || '', tradeType || 'Live', pair || 'S&P500']],
+                values: [[
+                    date,
+                    type,
+                    result,
+                    rsi,
+                    comment,
+                    strategy || '',
+                    tradeType || 'Live',
+                    pair || 'S&P500',
+                    ...rsiColumns
+                ]],
             },
         });
 
