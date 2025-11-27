@@ -12,30 +12,59 @@ function TradeForm({ onAddTrade }) {
     tradeType: 'Live',
     pair: 'S&P500',
     rsiTimeframes: {
-      '15min': null,
-      '30min': null,
-      '45min': null,
-      '1h': null,
-      '2h': null
+      '15min': { context: null, direction: null, rsi1530: '' },
+      '30min': { context: null, direction: null, rsi1530: '' },
+      '45min': { context: null, direction: null, rsi1530: '' },
+      '1h': { context: null, direction: null, rsi1530: '' },
+      '2h': { context: null, direction: null, rsi1530: '' }
     }
   });
 
   // Calculate counts of equal and unequal
   const rsiCounts = useMemo(() => {
     const counts = { gelijk: 0, ongelijk: 0 };
-    Object.values(formData.rsiTimeframes).forEach(value => {
-      if (value === 'gelijk') counts.gelijk++;
-      else if (value === 'ongelijk') counts.ongelijk++;
+    Object.values(formData.rsiTimeframes).forEach(tf => {
+      if (tf.context === 'gelijk') counts.gelijk++;
+      else if (tf.context === 'ongelijk') counts.ongelijk++;
     });
     return counts;
   }, [formData.rsiTimeframes]);
 
-  const handleRsiTimeframeChange = (timeframe, value) => {
+  const handleRsiContextChange = (timeframe, value) => {
     setFormData(prev => ({
       ...prev,
       rsiTimeframes: {
         ...prev.rsiTimeframes,
-        [timeframe]: prev.rsiTimeframes[timeframe] === value ? null : value
+        [timeframe]: {
+          ...prev.rsiTimeframes[timeframe],
+          context: prev.rsiTimeframes[timeframe].context === value ? null : value
+        }
+      }
+    }));
+  };
+
+  const handleRsiDirectionChange = (timeframe, value) => {
+    setFormData(prev => ({
+      ...prev,
+      rsiTimeframes: {
+        ...prev.rsiTimeframes,
+        [timeframe]: {
+          ...prev.rsiTimeframes[timeframe],
+          direction: prev.rsiTimeframes[timeframe].direction === value ? null : value
+        }
+      }
+    }));
+  };
+
+  const handleRsi1530Change = (timeframe, value) => {
+    setFormData(prev => ({
+      ...prev,
+      rsiTimeframes: {
+        ...prev.rsiTimeframes,
+        [timeframe]: {
+          ...prev.rsiTimeframes[timeframe],
+          rsi1530: value
+        }
       }
     }));
   };
@@ -51,11 +80,11 @@ function TradeForm({ onAddTrade }) {
       tradeType: 'Live',
       pair: 'S&P500',
       rsiTimeframes: {
-        '15min': null,
-        '30min': null,
-        '45min': null,
-        '1h': null,
-        '2h': null
+        '15min': { context: null, direction: null, rsi1530: '' },
+        '30min': { context: null, direction: null, rsi1530: '' },
+        '45min': { context: null, direction: null, rsi1530: '' },
+        '1h': { context: null, direction: null, rsi1530: '' },
+        '2h': { context: null, direction: null, rsi1530: '' }
       }
     }));
   };
@@ -156,22 +185,53 @@ function TradeForm({ onAddTrade }) {
             <div className="rsi-timeframes-grid">
               {['15min', '30min', '45min', '1h', '2h'].map(timeframe => (
                 <div key={timeframe} className="rsi-timeframe-item">
-                  <span className="timeframe-label">{timeframe}</span>
-                  <div className="rsi-btn-group">
-                    <button
-                      type="button"
-                      className={`rsi-btn gelijk ${formData.rsiTimeframes[timeframe] === 'gelijk' ? 'active' : ''}`}
-                      onClick={() => handleRsiTimeframeChange(timeframe, 'gelijk')}
-                    >
-                      Gelijk
-                    </button>
-                    <button
-                      type="button"
-                      className={`rsi-btn ongelijk ${formData.rsiTimeframes[timeframe] === 'ongelijk' ? 'active' : ''}`}
-                      onClick={() => handleRsiTimeframeChange(timeframe, 'ongelijk')}
-                    >
-                      Ongelijk
-                    </button>
+                  <div className="timeframe-header">
+                    <span className="timeframe-label">{timeframe}</span>
+                    <input
+                      type="text"
+                      placeholder="RSI 15:30"
+                      className="rsi-1530-input"
+                      value={formData.rsiTimeframes[timeframe].rsi1530}
+                      onChange={(e) => handleRsi1530Change(timeframe, e.target.value)}
+                    />
+                  </div>
+
+                  <div className="rsi-controls">
+                    {/* Gelijk/Ongelijk Buttons */}
+                    <div className="rsi-btn-group">
+                      <button
+                        type="button"
+                        className={`rsi-btn gelijk ${formData.rsiTimeframes[timeframe].context === 'gelijk' ? 'active' : ''}`}
+                        onClick={() => handleRsiContextChange(timeframe, 'gelijk')}
+                      >
+                        Gelijk
+                      </button>
+                      <button
+                        type="button"
+                        className={`rsi-btn ongelijk ${formData.rsiTimeframes[timeframe].context === 'ongelijk' ? 'active' : ''}`}
+                        onClick={() => handleRsiContextChange(timeframe, 'ongelijk')}
+                      >
+                        Ongelijk
+                      </button>
+                    </div>
+
+                    {/* Buy/Sell Buttons */}
+                    <div className="rsi-btn-group">
+                      <button
+                        type="button"
+                        className={`rsi-btn buy ${formData.rsiTimeframes[timeframe].direction === 'buy' ? 'active' : ''}`}
+                        onClick={() => handleRsiDirectionChange(timeframe, 'buy')}
+                      >
+                        Buy
+                      </button>
+                      <button
+                        type="button"
+                        className={`rsi-btn sell ${formData.rsiTimeframes[timeframe].direction === 'sell' ? 'active' : ''}`}
+                        onClick={() => handleRsiDirectionChange(timeframe, 'sell')}
+                      >
+                        Sell
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

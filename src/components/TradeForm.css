@@ -176,9 +176,9 @@ textarea:focus {
 
 .rsi-timeframe-item {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid var(--card-border);
     border-radius: 8px;
@@ -190,11 +190,47 @@ textarea:focus {
     border-color: rgba(0, 210, 255, 0.3);
 }
 
+.timeframe-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
 .timeframe-label {
     min-width: 60px;
     font-weight: 600;
     color: var(--accent-blue);
     font-size: 0.95rem;
+}
+
+.rsi-1530-input {
+    flex: 1;
+    max-width: 120px;
+    padding: 0.4rem 0.6rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.rsi-1530-input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    background: rgba(0, 210, 255, 0.1);
+}
+
+.rsi-1530-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.6;
+}
+
+.rsi-controls {
+    display: flex;
+    gap: 0.75rem;
 }
 
 .rsi-btn-group {
@@ -229,6 +265,20 @@ textarea:focus {
 }
 
 .rsi-btn.ongelijk.active {
+    background: rgba(255, 77, 77, 0.2);
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+}
+
+.rsi-btn.buy.active {
+    background: rgba(0, 255, 157, 0.2);
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+}
+
+.rsi-btn.sell.active {
     background: rgba(255, 77, 77, 0.2);
     border-color: var(--accent-red);
     color: var(--accent-red);
@@ -297,5 +347,9 @@ textarea:focus {
 @media (max-width: 768px) {
     .rsi-helper-grid {
         gap: 0.5rem;
+    }
+
+    .rsi-controls {
+        flex-direction: column;
     }
 }
